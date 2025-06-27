@@ -40,15 +40,21 @@ async function main() {
     
     try {
         console.log('\n🚀 Spouštím průzkum...');
-        await explorer.init(gameUrl);
         
-        console.log('⏳ Začínám mapovat hru...');
-        await explorer.explore();
+        const results = await explorer.exploreGame(gameUrl);
         
         console.log('\n🎉 Průzkum úspěšně dokončen!');
         console.log('📁 Zkontrolujte soubory:');
         console.log('   📄 game_exploration_results.json - Detailní data');
         console.log('   📄 game_exploration_report.txt - Čitelný report');
+        console.log('   📄 game_metrics.json - Pokročilé metriky');
+        console.log('   📄 game_metrics_summary.txt - Přehled metrik');
+        
+        console.log('\n📊 RYCHLÝ PŘEHLED:');
+        console.log(`   🎯 Celkem stavů: ${results.metrics.summary.totalStates}`);
+        console.log(`   🌳 Celkem cest: ${results.metrics.summary.totalPaths}`);
+        console.log(`   📏 Max hloubka: ${results.metrics.summary.maxDepth}`);
+        console.log(`   🎲 Skóre kvality: ${results.metrics.quality.overallScore}/100`);
         
     } catch (error) {
         console.error('\n❌ Nastala chyba při průzkumu:', error.message);
@@ -56,10 +62,9 @@ async function main() {
         console.error('   - Zkontrolujte URL adresu');
         console.error('   - Upravte selektory v kódu podle struktury vaší hry');
         console.error('   - Zkontrolujte internetové připojení');
-    } finally {
-        await explorer.close();
-        console.log('\n👋 Program ukončen');
     }
+    
+    console.log('\n👋 Program ukončen');
 }
 
 main().catch(console.error);

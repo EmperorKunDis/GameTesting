@@ -317,7 +317,7 @@ class GameExplorer {
       await page.goto(url, { waitUntil: 'domcontentloaded' });
       
       // Wait for any dynamic content to load
-      await page.waitForTimeout(2000);
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
       console.log('🔍 Začínám průzkum hry...');
       await this.exploreState(page);
@@ -577,13 +577,12 @@ class GameExplorer {
   async waitForStateChange(page) {
     try {
       // Wait for potential page changes
-      await page.waitForTimeout(1000);
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Check if URL changed (indicating navigation)
-      const url = page.url();
-      if (url !== page.url()) {
-        await page.waitForLoadState('domcontentloaded');
-      }
+      // Wait for any navigation to complete
+      await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 5000 }).catch(() => {
+        // Ignore timeout - page may not have navigated
+      });
       
     } catch (error) {
       // Non-critical error, continue
@@ -594,7 +593,7 @@ class GameExplorer {
   async goBack(page) {
     try {
       await page.goBack({ waitUntil: 'domcontentloaded', timeout: 5000 });
-      await page.waitForTimeout(500);
+      await new Promise(resolve => setTimeout(resolve, 500));
     } catch (error) {
       // If back doesn't work, try refresh or reload
       console.log('Nelze jít zpět, zkouším obnovení...');
