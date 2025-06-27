@@ -1,83 +1,274 @@
-# GameTester
+# 🎮 Game Testing Tool 2.0
 
-Automated text-based adventure game exploration tool using Puppeteer. Systematically maps game narratives and generates comprehensive reports.
+Pokročilý nástroj pro automatizované testování textových adventur s detailními metrikami a analýzou kvality.
 
-## Features
+## ✨ Nové funkce v 2.0
 
-- **Automated Web Scraping**: Uses Puppeteer to systematically navigate through text-based games
-- **Intelligent State Detection**: Advanced content hashing prevents infinite loops while ensuring complete exploration
-- **Comprehensive Game Mapping**: Builds complete tree structure of all game paths and choices
-- **Enhanced DOM Detection**: Multiple fallback selectors work with various game frameworks
-- **Robust Error Handling**: Automatic recovery from navigation failures and page reload issues
-- **Detailed Reporting**: Generates both JSON data and human-readable exploration reports
-- **Czech Language Support**: Designed for Czech text-based adventure games
+- **📊 Pokročilé metriky**: Kompletní analýza struktury hry, vyváženosti a obsahu
+- **🎯 Kvalitativní hodnocení**: Automatické skóre kvality hry (0-100 bodů)
+- **📈 Detailní reporty**: Lidsky čitelné zprávy v češtině s doporučeními
+- **🔍 Duplikátní obsah**: Detekce opakujícího se obsahu
+- **⚡ Optimalizovaný výkon**: Rychlejší průzkum s blokováním nepotřebných zdrojů
+- **🛡️ Robustní error handling**: Lepší zpracování chyb a obnova
+- **📋 Testovací sada**: Automatizované testy pro validaci funkčnosti
 
-## Installation
+## 📦 Instalace
 
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd GameTester
+# Klonování repositáře
+git clone https://github.com/EmperorKunDis/GameTesting.git
+cd GameTesting
 
-# Install dependencies
+# Instalace závislostí
 npm install
-```
 
-## Usage
-
-1. Start the game explorer:
-```bash
+# Spuštění
 npm start
 ```
 
-2. Enter the URL of your text-based adventure game when prompted
+## 🚀 Rychlé použití
 
-3. The tool will automatically:
-   - Open a browser window (visible for monitoring)
-   - Systematically click through all available choices
-   - Track visited states and build a complete game map
-   - Generate detailed reports
-
-## Output Files
-
-- `game_exploration_results.json` - Complete structured data with game tree, state history, and choice tracking
-- `game_exploration_report.txt` - Human-readable summary in Czech with exploration statistics
-
-## Configuration
-
-The tool includes comprehensive DOM selectors that work with most text-based games. For custom games, you can modify the selectors in `game-explorer.js`:
-
-**Story Text Selectors**:
-```javascript
-'.story-text', '.game-text', '.content', '.main-text', 
-'[class*="story"]', '[class*="text"]', '[class*="content"]',
-'main p', 'article p', '.container p', 'div p'
+### Základní průzkum
+```bash
+npm start
+# Zadejte URL vaší hry: https://emperorkundis.github.io/physics-adventure-game/
 ```
 
-**Interactive Element Selectors**:
-```javascript
-'button', '.option', '[role="button"]', 'a[href*="#"]', 'a[onclick]', 
-'.choice', '.button', '[class*="option"]', '[class*="choice"]', 
-'[class*="button"]', 'input[type="button"]', 'input[type="submit"]'
+### Testování
+```bash
+# Základní test
+npm test
+
+# Pokročilé testování
+node test-example.js --advanced
+
+# Výkonnostní benchmark
+node test-example.js --benchmark
 ```
 
-## Architecture
+## 📁 Struktura výstupních souborů
 
-- **GameExplorer Class**: Main exploration engine with recursive state traversal
-- **State Management**: Hash-based deduplication with path-aware state tracking
-- **Navigation System**: Multiple click mechanisms with automatic fallback and recovery
-- **Content Extraction**: Tree-walker algorithm captures complete page content for accurate state identification
+Po dokončení průzkumu nástroj vygeneruje:
 
-## Browser Compatibility
+### 📊 Metriky a analýza
+- **`game_metrics.json`** - Strukturovaná data metrik
+- **`game_metrics_summary.txt`** - Přehledný souhrn v češtině s doporučeními
 
-- Runs with Puppeteer's bundled Chromium
-- Compatible with both older and newer Puppeteer versions
-- Non-headless mode for visual monitoring of exploration progress
+### 🗺️ Herní mapa
+- **`game_exploration_results.json`** - Kompletní herní strom s historií
+- **`game_exploration_report.txt`** - Lidsky čitelný report průzkumu
 
-## Contributing
+## 📊 Analyzované metriky
 
-This tool is designed for educational game testing and analysis. Feel free to submit issues or pull requests for improvements.
+### 🏗️ Struktura hry
+- **Celkové stavy**: Počet unikátních herních situací
+- **Větvení**: Min/max/průměr počtu voleb na stav
+- **Hloubka**: Maximální a průměrná délka herních cest
+- **Slepé uličky**: Stavy bez dalších možností
+- **Smyčky**: Detekce cyklických cest
 
-## License
+### 📝 Kvalita obsahu
+- **Délka textů**: Statistiky délky textového obsahu
+- **Rozmanitost**: Variabilita textu mezi stavy
+- **Duplikáty**: Opakující se obsahy
+- **Slovní zásoба**: Celkový počet slov
 
-MIT
+### ⚡ Výkon
+- **Rychlost průzkumu**: Stavy za sekundu
+- **Celkový čas**: Doba potřebná k analýze
+- **Efektivita**: Poměr analyzovaných stavů k času
+
+### 🎯 Kvalitativní hodnocení (0-100 bodů)
+- **Vyváženost hry**: Hodnotí distribuci voleb a slepých uliček
+- **Rozmanitost obsahu**: Posuzuje variabilitu textu
+- **Plynulost navigace**: Analyzuje tok rozhodování
+
+## 🔧 Konfigurace
+
+### Přizpůsobení pro vaši hru
+
+V `game-explorer.js` můžete upravit:
+
+```javascript
+// Selektory pro obsah
+const contentSelectors = [
+  '.story-text',     // Váš specifický selektor
+  '.game-content',   // Další možnost
+  '#narrative'       // ID element
+];
+
+// Selektory pro volby
+const choiceSelectors = [
+  '.game-choice',    // Tlačítka voleb
+  '.option-button',  // Odkazy voleb
+  'button.choice'    // Specifické tlačítka
+];
+```
+
+### Limity průzkumu
+```javascript
+this.maxDepth = 50;     // Maximální hloubka
+this.maxStates = 1000;  // Maximální počet stavů
+this.timeoutMs = 30000; // Timeout na stránku (ms)
+```
+
+## 📈 Interpretace výsledků
+
+### Doporučené hodnoty
+
+| Metrika | Ideální rozsah | Varování |
+|---------|----------------|----------|
+| Větvení (průměr) | 2.0 - 3.5 | < 1.5 (příliš lineární), > 4.0 (příliš složité) |
+| Slepé uličky | < 20% stavů | > 30% stavů |
+| Duplicitní obsah | 0% | > 20% |
+| Celkové skóre | 80-100 | < 70 |
+
+### Příklad interpretace
+```
+✅ DOBRÉ SKÓRE (85/100):
+• Vyváženost hry: Vyvážená (2.3 volby/stav)
+• Obsah: Dobrá rozmanitost (5-150 slov/stav)
+• Navigace: Vyvážená (25% lineárních cest)
+
+⚠️  UPOZORNĚNÍ:
+• 3 duplicitní stavy nalezeny
+• Zvažte zkrácení nejdelších textů
+```
+
+## 🛠️ Pokročilé funkce
+
+### Vlastní selektory
+```javascript
+// Pro hry s nestandartní strukturou
+const customSelectors = {
+  story: '.my-game-text',
+  choices: '.my-choice-buttons'
+};
+```
+
+### Batch testování
+```javascript
+const urls = [
+  'https://hra1.example.com',
+  'https://hra2.example.com'
+];
+
+for (const url of urls) {
+  await explorer.exploreGame(url);
+}
+```
+
+## 🐛 Řešení problémů
+
+### Časté chyby
+
+**❌ "Nelze najít volby"**
+- Zkontrolujte selektory v kódu
+- Hra může používat nestandardní elementy
+
+**❌ "Timeout při načítání"**
+- Zvyšte `timeoutMs` hodnotu
+- Zkontrolujte internetové připojení
+
+**❌ "Příliš mnoho stavů"**
+- Snižte `maxStates` pro prevenci nekonečných smyček
+- Zkontrolujte, zda hra nemá dynamický obsah
+
+### Debug režim
+```bash
+# Spuštění s debugováním
+node --inspect index.js
+
+# Podrobný výstup
+DEBUG=true npm start
+```
+
+## 📚 API Reference
+
+### GameExplorer
+```javascript
+const explorer = new GameExplorer();
+
+// Hlavní metoda
+const results = await explorer.exploreGame(url);
+
+// Výsledky obsahují
+{
+  gameTree: {},      // Mapa všech stavů
+  stateHistory: [],  // Historie průzkumu
+  metrics: {}        // Kompletní metriky
+}
+```
+
+### GameMetrics
+```javascript
+const metrics = new GameMetrics();
+
+// Analýza stavu
+metrics.analyzeState(content, choices, depth, hash);
+
+// Finální report
+const report = metrics.generateReport();
+```
+
+## 🎯 Příklady použití
+
+### Pro vývojáře her
+```javascript
+// Testování balance
+if (metrics.structure.deadEnds > totalStates * 0.3) {
+  console.log('⚠️ Příliš mnoho slepých uliček!');
+}
+
+// Kontrola obsahu
+if (metrics.content.avgWordsPerState < 50) {
+  console.log('💬 Zvažte delší popisy');
+}
+```
+
+### Pro QA testery
+```bash
+# Automatické testování před release
+npm test
+node test-example.js --advanced
+
+# Ověření výkonu
+node test-example.js --benchmark
+```
+
+## 🤝 Přispívání
+
+1. Fork repositáře
+2. Vytvořte feature branch (`git checkout -b nova-funkce`)
+3. Commit změny (`git commit -am 'Přidána nová funkce'`)
+4. Push do branch (`git push origin nova-funkce`)
+5. Vytvořte Pull Request
+
+## 📝 Changelog
+
+### v2.0.0 (2025-06-27)
+- ✨ Přidány pokročilé metriky
+- 🎯 Kvalitativní hodnocení hry
+- 📊 Detailní reporty v češtině
+- 🛡️ Robustní error handling
+- ⚡ Optimalizace výkonu
+- 🧪 Testovací sada
+
+### v1.0.0
+- 🎮 Základní průzkum textových her
+- 🗺️ Mapování herního stromu
+- 📁 JSON a TXT reporty
+
+## 📄 Licence
+
+MIT License - viz [LICENSE](LICENSE) soubor.
+
+## 🙋‍♂️ Podpora
+
+- 🐛 **Issues**: [GitHub Issues](https://github.com/EmperorKunDis/GameTesting/issues)
+- 💬 **Diskuze**: [GitHub Discussions](https://github.com/EmperorKunDis/GameTesting/discussions)
+- 📧 **Email**: [vaš-email@example.com]
+
+---
+
+**Vytvořeno s ❤️ pro komunitu vývojářů textových her**

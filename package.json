@@ -1,15 +1,30 @@
 {
-  "name": "game-explorer",
-  "version": "1.0.0",
-  "description": "Automatický průzkumník textových her",
-  "main": "start-game-explorer.js",
+  "name": "game-testing-tool",
+  "version": "2.0.0",
+  "description": "Automated text-based adventure game exploration tool with advanced metrics",
+  "main": "index.js",
   "scripts": {
-    "start": "node start-game-explorer.js",
-    "install-deps": "npm install puppeteer"
+    "start": "node index.js",
+    "test": "node test-example.js",
+    "dev": "node --inspect index.js"
   },
-  "author": "AI Game Explorer",
+  "keywords": [
+    "game-testing",
+    "puppeteer",
+    "text-adventure",
+    "automation",
+    "metrics"
+  ],
+  "author": "EmperorKunDis",
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^24.10.2"
+    "puppeteer": "^24.10.0",
+    "readline": "^1.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
