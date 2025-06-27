@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Generated files
+game_exploration_results.json
+game_exploration_report.txt
+
+# Local settings
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

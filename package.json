@@ -1,0 +1,15 @@
+{
+  "name": "game-explorer",
+  "version": "1.0.0",
+  "description": "Automatický průzkumník textových her",
+  "main": "start-game-explorer.js",
+  "scripts": {
+    "start": "node start-game-explorer.js",
+    "install-deps": "npm install puppeteer"
+  },
+  "author": "AI Game Explorer",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^24.10.2"
+  }
+}
